@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ForumSystem.Web.MVC.Models.ForumPostCategories.ForumPostCategoriesViewModel>
+@{
+    ViewBag.Title = "_ForumPostCategoriesPartial";
+}
+
+<div class="panel-body">
+    <div class="list-group">
+        @foreach (var category in Model)
+        {
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">@Html.ActionLink(category.Name, "ForumPosts/" + category.Id, "ForumPosts")</h4>
+                <p class="list-group-item-text">@category.Description</p>
+            </div>
+        }
+    </div>
+</div>

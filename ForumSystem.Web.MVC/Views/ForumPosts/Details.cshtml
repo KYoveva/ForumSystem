@@ -1,0 +1,36 @@
+﻿@using ForumSystem.Web.MVC.Areas.Private.Models.Answers
+@model IEnumerable<ForumSystem.Web.MVC.Models.ForumPosts.ForumPostDetailsViewModel>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@foreach (var post in Model)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <br>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h1 class="text-muted">@post.Title</h1>
+                        <p>
+                            @post.Content
+                        </p>
+                        <p class="text-muted"><span class="glyphicon glyphicon-calendar"></span>&nbsp;@post.DateCreated  <span class="badge">by: @post.Author </span></p>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    @if (User.Identity.IsAuthenticated)
+                {
+                        @Html.Partial("~/Areas/Private/Views/Answers/_AddAnswerPartial.cshtml", new AnswersInputModel(post.Id))
+                    }
+                </div>
+                @*<div class="row">
+                    @{Html.RenderAction("_NewsCommentsPartial");}
+                </div>*@
+            </div>
+        </div>
+    </div>
+}
