@@ -1,0 +1,83 @@
+﻿@model PagedList.IPagedList<ForumSystem.Web.MVC.Models.Answers.AnswersViewModel>
+@using PagedList.Mvc;
+@using Microsoft.AspNet.Identity;
+
+@section styles {
+    @Styles.Render("~/bundles/pagedlist")
+}
+
+@{
+    ViewBag.Title = "_ForumPostAnswersPartial";
+}
+
+<div class="col-sm-8">
+    <h3>Answers</h3>
+    @foreach (var answer in Model)
+    {
+        <table>
+            <tr>
+                <td style="vertical-align:top"><img class="media-object" src="@answer.Avatar" width="50"></td>
+                <td>
+                    <div class="well">@answer.Content</div>
+                    <span class="glyphicon glyphicon-calendar top"></span>&nbsp;@answer.CreatedOn
+                    <span class="badge top">by: @answer.Author </span>
+                    <span class="badge">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span data-id="@answer.Id" data-action="likeComment" name="like/dislike"><span class="glyphicon glyphicon glyphicon-thumbs-up"></span></span>
+                            <span data-id="@answer.Id" data-action="commentLikesCount">@answer.LikesCount</span>
+                            <span data-id="@answer.Id" data-action="dislikeComment" name="like/dislike"><span class="glyphicon glyphicon glyphicon-thumbs-down"></span></span>
+                        }
+                        else
+                        {
+                            <span data-id="@answer.Id" data-action="commentLikesCount">@answer.LikesCount</span>
+                        }
+                    </span>
+                    @if (User.Identity.GetUserId() == answer.AuthorId)
+                    {
+                        <span data-id="@answer.Id" data-action="delete"><input type="submit" value="Delete" /></span>
+                    }
+                </td>
+            </tr>
+        </table>
+        <br />
+    }
+</div>
+<div class="row">
+    <div class="col-md-9">
+        @Html.Partial("_ForumPostAnswersPagingPartial", Model)
+    </div>
+</div>
+<style>
+    span[name="like/dislike"] {
+        cursor: pointer;
+    }
+</style>
+@section scripts{
+    <script>
+        $("span[data-action='likeComment'").click(function () {
+            var id = $(this).attr("data-id");
+            commenLikeClick(id, 1);
+        });
+
+        function commenLikeClick(id, likeType) {
+            $.post("/CommentLike/Like", { commentId: id, likeType: likeType },
+                function (data) {
+                    var likesCount = data.Count;
+                    $("span[data-action='commentLikesCount'][data-id='" + id + "']").html(likesCount)
+                });
+        }
+
+        $("span[data-action='delete'").click(function () {
+            var id = $(this).attr("data-id");
+            deleteClick(id);
+        });
+
+        function deleteClick(id) {
+            $.post("/Comment/Delete", { id: id },
+            function (data) {
+                location.reload();
+            });
+        }
+    </script>
+}

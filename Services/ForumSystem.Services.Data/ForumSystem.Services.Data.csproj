@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswersService.cs" />
+    <Compile Include="Contracts\IAnswersService.cs" />
     <Compile Include="Contracts\IForumPostsService.cs" />
     <Compile Include="ForumPostCategoriesService.cs" />
     <Compile Include="Contracts\IForumPostCategoriesService.cs" />

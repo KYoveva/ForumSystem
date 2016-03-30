@@ -1,5 +1,4 @@
-﻿@using ForumSystem.Web.MVC.Areas.Private.Models.Answers
-@model IEnumerable<ForumSystem.Web.MVC.Models.ForumPosts.ForumPostDetailsViewModel>
+﻿@model IEnumerable<ForumSystem.Web.MVC.Models.ForumPosts.ForumPostDetailsViewModel>
 
 @{
     ViewBag.Title = "Details";
@@ -17,20 +16,50 @@
                         <p>
                             @post.Content
                         </p>
-                        <p class="text-muted"><span class="glyphicon glyphicon-calendar"></span>&nbsp;@post.DateCreated  <span class="badge">by: @post.Author </span></p>
+                        <p class="text-muted"><span class="glyphicon glyphicon-calendar"></span>&nbsp;@post.CreatedOn  <span class="badge">by: @post.Author </span></p>
                     </div>
                 </div>
                 <br />
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
-                {
-                        @Html.Partial("~/Areas/Private/Views/Answers/_AddAnswerPartial.cshtml", new AnswersInputModel(post.Id))
+                    {
+                        <h4>Add new answer.</h4>
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <textarea rows="4" cols="50" id="answer"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button id="create" class="btn btn-default" data-id="@post.Id">Answer</button>
+                            </div>
+                        </div>
                     }
                 </div>
-                @*<div class="row">
-                    @{Html.RenderAction("_NewsCommentsPartial");}
-                </div>*@
+                <div class="row" id="partialViewDiv">
+                    @{Html.RenderAction("_ForumPostAnswersPartial");}
+                </div>
             </div>
         </div>
     </div>
+}
+
+@section Scripts {
+    <script>
+        $("button").click(function () {
+            var data =
+                {
+                    Content: $("#answer").val(),
+                    ForumPostId: $(this).attr("data-id")
+                };
+
+            var url = '@Url.Action("Create", "Answer")';
+            $.post(url, data, function (data) {
+                var id = data.forumPostId;
+                $('#answer').val("");
+                $("#partialViewDiv").load('@(Url.Action("_ForumPostAnswersPartial", "ForumPosts",null, Request.Url.Scheme))?id=' + id);
+            });
+        });
+    </script>
 }

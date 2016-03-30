@@ -1,0 +1,7 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<ForumSystem.Web.MVC.Models.Answers.AnswersViewModel>
+<div class="row">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("GetForumPostAnswersPartial", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
