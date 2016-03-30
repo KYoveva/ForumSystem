@@ -1,11 +1,12 @@
 ﻿namespace ForumSystem.Data.Seed
 {
+    using System;
     using System.Linq;
-    using Common.Constants;
+    using ForumSystem.Common.Constants;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
-
+    
     public class AdminSeeder : IDataSeeder
     {
         public void Seed(ForumSystemDbContext context)
@@ -21,7 +22,7 @@
                 var userManager = new UserManager<User>(new UserStore<User>(context));
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-                userManager.Create(new User() { UserName = masterAdminUserName, Email = masterAdminUserName}, "123456");
+                userManager.Create(new User() { UserName = masterAdminUserName, Email = masterAdminUserName, CreatedOn = DateTime.UtcNow }, "123456");
 
                 roleManager.Create(new IdentityRole() { Name = roleName });
 

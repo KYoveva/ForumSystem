@@ -1,16 +1,15 @@
 ﻿namespace ForumSystem.Services.Data
 {
-    using System;
     using System.Linq;
     using Contracts;
-    using ForumSystem.Data.Repositories;
+    using ForumSystem.Data.Common;
     using Models;
 
     public class ForumPostsService : IForumPostsService
     {
-        private readonly IRepository<ForumPost> forumPosts;
+        private readonly IDbRepository<ForumPost, int> forumPosts;
 
-        public ForumPostsService(IRepository<ForumPost> forumPosts)
+        public ForumPostsService(IDbRepository<ForumPost, int> forumPosts)
         {
             this.forumPosts = forumPosts;
         }

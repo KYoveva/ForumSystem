@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Common.Constants;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
@@ -22,7 +21,7 @@
             {
                 var userManager = new UserManager<User>(new UserStore<User>(context));
 
-                userManager.Create(new User() { UserName = authorUserName, Email = authorUserName }, "123456");
+                userManager.Create(new User() { UserName = authorUserName, Email = authorUserName, CreatedOn = DateTime.UtcNow }, "123456");
 
                 var author = context.Users.FirstOrDefault(u => u.UserName == authorUserName);
 

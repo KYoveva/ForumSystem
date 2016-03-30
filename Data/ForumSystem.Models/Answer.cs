@@ -3,8 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Data.Common.Models;
 
-    public class Answer
+    public class Answer : BaseModel<int>
     {
         private ICollection<AnswerLike> likes;
         private ICollection<AnswerDislike> dislikes;
@@ -14,8 +15,6 @@
             this.likes = new HashSet<AnswerLike>();
             this.dislikes = new HashSet<AnswerDislike>();
         }
-
-        public int Id { get; set; }
 
         [Required]
         [MaxLength(1000)]

@@ -1,9 +1,9 @@
 ﻿namespace ForumSystem.Models
 {
-    public class AnswerDislike
-    {
-        public int Id { get; set; }
+    using Data.Common.Models;
 
+    public class AnswerDislike : BaseModel<int>
+    {
         public string AuthorId { get; set; }
 
         public virtual User Author { get; set; }

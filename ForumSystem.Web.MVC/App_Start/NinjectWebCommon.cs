@@ -4,6 +4,7 @@
 namespace ForumSystem.Web.MVC.App_Start
 {
     using System;
+    using System.Data.Entity;
     using System.Web;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -14,8 +15,8 @@ namespace ForumSystem.Web.MVC.App_Start
 
     using Common.Constants;
     using Data;
-    using Data.Repositories;
-   
+    using Data.Common;
+
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -66,9 +67,9 @@ namespace ForumSystem.Web.MVC.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IForumSystemDbContext>().To<ForumSystemDbContext>().InRequestScope();
+            kernel.Bind<DbContext>().To<ForumSystemDbContext>().InRequestScope();
 
-            kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
+            kernel.Bind(typeof(IDbRepository<,>)).To(typeof(DbRepository<,>));
             kernel.Bind(b => b
                 .From(Assemblies.DataServices)
                 .SelectAllClasses()

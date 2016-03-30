@@ -2,14 +2,14 @@
 {
     using System.Linq;
     using Contracts;
-    using ForumSystem.Data.Repositories;
+    using ForumSystem.Data.Common;
     using Models;
 
     public class ForumPostCategoriesService : IForumPostCategoriesService
     {
-        private readonly IRepository<ForumPostCategory> categories;
+        private readonly IDbRepository<ForumPostCategory, int> categories;
 
-        public ForumPostCategoriesService(IRepository<ForumPostCategory> categories)
+        public ForumPostCategoriesService(IDbRepository<ForumPostCategory, int> categories)
         {
             this.categories = categories;
         }

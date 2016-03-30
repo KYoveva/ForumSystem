@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Data.Common.Models;
 
-    public class ForumPostCategory
+    public class ForumPostCategory : BaseModel<int>
     {
         private ICollection<ForumPost> forumPosts;
 
@@ -11,8 +12,6 @@
         {
             this.forumPosts = new HashSet<ForumPost>();
         }
-
-        public int Id { get; set; }
 
         [Required]
         [MaxLength(100)]

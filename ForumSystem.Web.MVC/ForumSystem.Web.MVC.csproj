@@ -188,6 +188,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -289,6 +290,10 @@
     <ProjectReference Include="..\Common\ForumSystem.Common.Constants\ForumSystem.Common.Constants.csproj">
       <Project>{6405723a-438e-48ec-8755-14098117de11}</Project>
       <Name>ForumSystem.Common.Constants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\ForumSystem.Data.Common\ForumSystem.Data.Common.csproj">
+      <Project>{9000cfa5-3fcb-4e54-9701-44c7a3abbbf9}</Project>
+      <Name>ForumSystem.Data.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Data\ForumSystem.Data\ForumSystem.Data.csproj">
       <Project>{9d48fa26-2fa9-4a8c-aa4e-4a51cf2116af}</Project>

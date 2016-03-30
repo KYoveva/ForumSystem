@@ -3,8 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Data.Common.Models;
 
-    public class ForumPost
+    public class ForumPost : BaseModel<int>
     {
         private ICollection<Answer> answers;
 
@@ -12,8 +13,6 @@
         {
             this.answers = new HashSet<Answer>();
         }
-
-        public int Id { get; set; }
 
         [Required]
         [MaxLength(150)]
