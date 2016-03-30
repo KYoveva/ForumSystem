@@ -8,5 +8,7 @@
         IQueryable<ForumPost> ForumPostsByCategory(int id);
 
         IQueryable<ForumPost> ForumPostById(int id);
+
+        ForumPost AddForumPost(ForumPost toAdd);
     }
 }

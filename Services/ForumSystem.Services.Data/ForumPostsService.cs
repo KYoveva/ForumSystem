@@ -1,5 +1,6 @@
 ﻿namespace ForumSystem.Services.Data
 {
+    using System;
     using System.Linq;
     using Contracts;
     using ForumSystem.Data.Common;
@@ -14,6 +15,14 @@
             this.forumPosts = forumPosts;
         }
 
+        public ForumPost AddForumPost(ForumPost toAdd)
+        {
+            this.forumPosts.Add(toAdd);
+            this.forumPosts.Save();
+
+            return toAdd;
+        }
+
         public IQueryable<ForumPost> ForumPostById(int id)
         {
             return this.forumPosts.All().Where(x => x.Id == id);
@@ -23,5 +32,6 @@
         {
             return this.forumPosts.All().Where(x=>x.Category.Id==id);
         }
+
     }
 }
