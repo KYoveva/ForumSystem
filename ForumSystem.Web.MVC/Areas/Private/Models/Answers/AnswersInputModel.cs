@@ -1,6 +1,5 @@
 ﻿namespace ForumSystem.Web.MVC.Areas.Private.Models.Answers
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using Infrastructure.Mappings;
     using ForumSystem.Models;

@@ -1,13 +1,20 @@
-﻿@model IEnumerable<ForumSystem.Web.MVC.Models.ForumPosts.ForumPostViewModel>
+﻿@using ForumSystem.Web.MVC.Areas.Private.Models.ForumPosts
+@model IEnumerable<ForumSystem.Web.MVC.Models.ForumPosts.ForumPostViewModel>
 @{
     ViewBag.Title = "ForumPosts";
 }
 
 <div class="panel panel-success">
     <div class="panel-heading text-right">
-        <button type="button" class="btn btn-info">Add Post</button>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button type="button" class="btn btn-info">Add Post</button>
+        }
     </div>
     <div class="panel-body">
+        <div class="form-group" id="partial">
+
+        </div>
         <div class="table-responsive">
             <table class="table text-center">
                 <thead>
@@ -43,3 +50,12 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        var url = '@Url.Action("DisplayPartial", "ForumPosts", new ForumPostInputModel(Context.Request.Url.Segments[3]))';
+        $('button').click(function () {
+            $('#partial').load(url);
+        })
+    </script>
+}

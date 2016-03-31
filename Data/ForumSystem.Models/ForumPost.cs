@@ -26,6 +26,8 @@
 
         public virtual User Author { get; set; }
 
+        public int CategoryId { get; set; }
+
         public virtual ForumPostCategory Category { get; set; }
 
         public virtual ICollection<Answer> Answers

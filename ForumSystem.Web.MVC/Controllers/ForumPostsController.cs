@@ -8,23 +8,29 @@
     using Models.Answers;
     using PagedList;
     using Services.Data.Contracts;
+    using Areas.Private.Models.ForumPosts;
+    using Microsoft.AspNet.Identity;
+    using AutoMapper;
+    using ForumSystem.Models;
+    using System.Web;
+    using System;
 
     public class ForumPostsController : Controller
     {
         private const int PageSize = 10;
 
-        private IForumPostsService forumPostsService;
+        private IForumPostsService posts;
         private IAnswersService answersService;
 
-        public ForumPostsController(IForumPostsService forumPostsService, IAnswersService answersService)
+        public ForumPostsController(IForumPostsService posts, IAnswersService answersService)
         {
-            this.forumPostsService = forumPostsService;
+            this.posts = posts;
             this.answersService = answersService;
         }
 
         public ActionResult ForumPosts(int id)
         {
-            var forumPosts = this.forumPostsService
+            var forumPosts = this.posts
                 .ForumPostsByCategory(id)
                 .ProjectTo<ForumPostViewModel>()
                 .ToList();
@@ -39,7 +45,7 @@
 
         public ActionResult Details(int id)
         {
-            var forumPosts = this.forumPostsService
+            var forumPosts = this.posts
                 .ForumPostById(id)
                 .ProjectTo<ForumPostDetailsViewModel>()
                 .ToList();
@@ -62,8 +68,35 @@
                 .ProjectTo<AnswersViewModel>();
 
             int pageNumber = page ?? 1;
-            
-            return PartialView("_ForumPostAnswersPartial", answersData.ToPagedList(pageNumber, PageSize));
+
+            return this.PartialView("_ForumPostAnswersPartial", answersData.ToPagedList(pageNumber, PageSize));
+        }
+
+        public ActionResult DisplayPartial(ForumPostInputModel model)
+        {
+                return this.PartialView("~/Areas/Private/Views/ForumPosts/_AddForumPostPartial.cshtml", model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddForumPost(ForumPostInputModel model)
+        {
+            var userId = this.User.Identity.GetUserId();
+            if (model != null && ModelState.IsValid)
+            {
+                var post = Mapper.Map<ForumPost>(model);
+                post.AuthorId = userId;
+                post.CreatedOn = DateTime.UtcNow;
+
+                post = this.posts.AddForumPost(post);
+
+                return Redirect("/");
+            }
+            else
+            {
+                throw new HttpException(400, "Invalid post");
+            }
         }
     }
 }
