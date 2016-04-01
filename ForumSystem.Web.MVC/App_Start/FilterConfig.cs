@@ -1,8 +1,7 @@
-﻿using System.Web;
-using System.Web.Mvc;
-
-namespace ForumSystem.Web.MVC
+﻿namespace ForumSystem.Web.MVC
 {
+    using System.Web.Mvc;
+
     public class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)

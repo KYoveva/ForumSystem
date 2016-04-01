@@ -12,8 +12,8 @@
     using Microsoft.AspNet.Identity;
     using AutoMapper;
     using ForumSystem.Models;
-    using System.Web;
     using System;
+    using Common.Toastr;
 
     public class ForumPostsController : Controller
     {
@@ -74,7 +74,7 @@
 
         public ActionResult DisplayPartial(ForumPostInputModel model)
         {
-                return this.PartialView("~/Areas/Private/Views/ForumPosts/_AddForumPostPartial.cshtml", model);
+            return this.PartialView("~/Areas/Private/Views/ForumPosts/_AddForumPostPartial.cshtml", model);
         }
 
         [Authorize]
@@ -91,12 +91,13 @@
 
                 post = this.posts.AddForumPost(post);
 
-                return Redirect("/");
+                this.AddToastMessage("Success", "Your forum post was added successfully!", ToastType.Success);
             }
             else
             {
-                throw new HttpException(400, "Invalid post");
+                this.AddToastMessage("Error", "Invalid forum post!", ToastType.Error);
             }
+            return Redirect("/");
         }
     }
 }

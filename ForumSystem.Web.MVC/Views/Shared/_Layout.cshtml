@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/toastr")
     @RenderSection("styles", required: false)
 
 </head>
@@ -26,6 +27,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
+                @Html.Partial("_Toastr")
             </div>
         </div>
     </div>

@@ -207,9 +207,11 @@
     <Compile Include="Areas\Private\PrivateAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\ControllerExtensions.cs" />
     <Compile Include="Controllers\ForumPostsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessageControllerBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,6 +230,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -238,6 +242,9 @@
     <Content Include="Areas\Private\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Private\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Private\Views\ForumPosts\_AddForumPostPartial.cshtml" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
+    <Content Include="App_Code\ToastrBuilder.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -249,6 +256,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -287,6 +296,7 @@
     <Content Include="Views\ForumPosts\Details.cshtml" />
     <Content Include="Views\ForumPosts\_ForumPostAnswersPartial.cshtml" />
     <Content Include="Views\ForumPosts\_ForumPostAnswersPagingPartial.cshtml" />
+    <Content Include="Views\Shared\_Toastr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -303,6 +313,10 @@
     <ProjectReference Include="..\Common\ForumSystem.Common.Constants\ForumSystem.Common.Constants.csproj">
       <Project>{6405723a-438e-48ec-8755-14098117de11}</Project>
       <Name>ForumSystem.Common.Constants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\ForumSystem.Common.Toastr\ForumSystem.Common.Toastr.csproj">
+      <Project>{169ad59b-0e30-45ed-a9dd-6a08fe379770}</Project>
+      <Name>ForumSystem.Common.Toastr</Name>
     </ProjectReference>
     <ProjectReference Include="..\Data\ForumSystem.Data.Common\ForumSystem.Data.Common.csproj">
       <Project>{9000cfa5-3fcb-4e54-9701-44c7a3abbbf9}</Project>

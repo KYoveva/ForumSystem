@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ForumSystem.Web.MVC.Models.ForumPosts.ForumPostDetailsViewModel>
+@using ForumSystem.Web.MVC.Areas.Private.Models.Answers
 
 @{
     ViewBag.Title = "Details";
@@ -43,9 +44,10 @@
             </div>
         </div>
     </div>
-}
+                        }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/toastr")
     <script>
         $("button").click(function () {
             var data =
@@ -56,9 +58,12 @@
 
             var url = '@Url.Action("Create", "Answer")';
             $.post(url, data, function (data) {
+                toastr.success('Answer added');
                 var id = data.forumPostId;
                 $('#answer').val("");
                 $("#partialViewDiv").load('@(Url.Action("_ForumPostAnswersPartial", "ForumPosts",null, Request.Url.Scheme))?id=' + id);
+            }).fail(function () {
+                toastr.error('The answer length must be between 1 and 1000 symbols!');
             });
         });
     </script>
