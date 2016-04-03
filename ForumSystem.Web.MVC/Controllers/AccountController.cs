@@ -11,6 +11,7 @@
     using Microsoft.Owin.Security;
     using Models;
     using System.IO;
+    using Common.Toastr;
 
     [Authorize]
     public class AccountController : Controller
@@ -79,6 +80,7 @@
             switch (result)
             {
                 case SignInStatus.Success:
+                    this.AddToastMessage("Success", "You logged in successfully!", ToastType.Success);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -86,6 +88,7 @@
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
+                    this.AddToastMessage("Error", "Invalid username or password!", ToastType.Error);
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
@@ -181,9 +184,10 @@
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    this.AddToastMessage("Success", "You registered successfully!", ToastType.Success);
                     return RedirectToAction("Index", "Home");
                 }
+                this.AddToastMessage("Error", "Register information is not valid!", ToastType.Error);
                 AddErrors(result);
             }
 
