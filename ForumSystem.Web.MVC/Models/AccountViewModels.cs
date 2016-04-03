@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Common.Constants;
+    using System.Web;
 
     public class ExternalLoginConfirmationViewModel
     {
@@ -74,8 +75,7 @@
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [RegularExpression(ModelConstants.ValidateUrl)]
-        public string Avatar { get; set; }
+        public HttpPostedFileBase ProfileImage { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

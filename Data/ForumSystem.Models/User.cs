@@ -1,14 +1,13 @@
 ﻿namespace ForumSystem.Models
 {
+    using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Common.Constants;
+    using System.Web;
     using Data.Common.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
 
     public class User : IdentityUser, IAuditInfo, IDeletableEntity, ITKeyEntity<string>
     {
@@ -25,14 +24,13 @@
             this.answerDislikes = new HashSet<AnswerDislike>();
         }
 
-        [RegularExpression(ModelConstants.ValidateUrl)]
-        public string Avatar { get; set; }
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             return userIdentity;
         }
+
+        public string Photo { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

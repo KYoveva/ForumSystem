@@ -1,0 +1,33 @@
+﻿
+@(Html.Kendo().Grid<ForumSystem.Models.ForumPostCategory>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+        columns.Bound(c => c.Name);
+        columns.Bound(c => c.Description);
+        columns.Bound(c => c.CreatedOn);
+        columns.Bound(c => c.ModifiedOn);
+        columns.Bound(c => c.IsDeleted);
+        columns.Bound(c => c.DeletedOn);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
+      })
+      .ToolBar(toolbar => {
+            toolbar.Create();
+      })
+      .ColumnMenu()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .Pageable()
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("ForumPostCategories_Read", "Categories"))
+          .Create(create => create.Action("ForumPostCategories_Create", "Categories"))
+          .Update(update => update.Action("ForumPostCategories_Update", "Categories"))
+          .Destroy(destroy => destroy.Action("ForumPostCategories_Destroy", "Categories"))
+      )
+)

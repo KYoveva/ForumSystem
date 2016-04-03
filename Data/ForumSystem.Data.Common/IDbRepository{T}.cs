@@ -14,7 +14,13 @@
 
         void Add(T entity);
 
+        void Update(T entity);
+
         void Delete(T entity);
+
+        T Attach(T entity);
+
+        void Detach(T entity);
 
         void HardDelete(T entity);
 

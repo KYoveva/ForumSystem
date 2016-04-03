@@ -10,6 +10,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Models;
+    using System.IO;
 
     [Authorize]
     public class AccountController : Controller
@@ -150,7 +151,26 @@
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email, CreatedOn = DateTime.UtcNow };
+                var photo = "http://cdn2.hubspot.net/hub/245562/file-306538470-png/v3/ninja2.png?t=1453934745802";
+
+                if (model.ProfileImage != null)
+                {
+                    if (model.ProfileImage.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(model.ProfileImage.FileName);
+                        var folderPath = Server.MapPath("~/Content/Images");
+                        var imagePath = folderPath + "\\" + fileName;
+
+                        if (!Directory.Exists(folderPath))
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(folderPath);
+                        }
+
+                        model.ProfileImage.SaveAs(imagePath);
+                        photo = "/Content/Images/" + fileName;
+                    }
+                }
+                var user = new User { UserName = model.UserName, Email = model.Email, CreatedOn = DateTime.UtcNow, Photo = photo };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

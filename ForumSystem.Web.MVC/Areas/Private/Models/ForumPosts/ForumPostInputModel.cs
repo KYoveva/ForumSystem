@@ -13,15 +13,18 @@
         public ForumPostInputModel(string categoryId)
         {
             var category = int.Parse(categoryId);
-            this.CategoryId= category;
+            this.CategoryId = category;
         }
 
-        [Required]
-        [MaxLength(150)]
+        [Required(ErrorMessage = "Title is required")]
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 5 characters required")]
+        [StringLength(150, ErrorMessage = "Maximum {2} characters exceeded")]
         public string Title { get; set; }
 
         [Required]
-        [StringLength(1000), MinLength(1)]
+        [Display(Name = "Content")]
+        [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 5 characters required")]
+        [StringLength(1000, ErrorMessage = "Content must be between 1 and 1000 symbols!")]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 

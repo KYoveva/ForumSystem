@@ -3,11 +3,12 @@
     using System.ComponentModel.DataAnnotations;
     using Infrastructure.Mappings;
     using ForumSystem.Models;
-    
+
     public class AnswersInputModel : IMapFrom<Answer>
     {
         [Required]
-        [StringLength(1000), MinLength(1)]
+        [Display(Name = "Content")]
+        [StringLength(1000, MinimumLength = 1, ErrorMessage ="Content must be between 1 and 1000 symbols!")]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 

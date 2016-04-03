@@ -27,7 +27,7 @@
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Answer, AnswersViewModel>()
-               .ForMember(r => r.Avatar, opts => opts.MapFrom(x => x.Author.Avatar))
+               .ForMember(r => r.Avatar, opts => opts.MapFrom(x => x.Author.Photo))
                .ForMember(r => r.Author, opts => opts.MapFrom(x => x.Author.UserName))
                .ForMember(r => r.LikesCount, opts => opts.MapFrom(x => (x.Likes.Count - x.Dislikes.Count)));
         }

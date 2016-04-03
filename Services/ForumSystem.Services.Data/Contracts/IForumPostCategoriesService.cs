@@ -6,5 +6,11 @@
     public interface IForumPostCategoriesService
     {
         IQueryable<ForumPostCategory> AllForumPostCategories();
+
+        ForumPostCategory AddCategory(ForumPostCategory toAdd);
+
+        void Delete(ForumPostCategory toDelete);
+
+        void SaveChanges();
     }
 }
