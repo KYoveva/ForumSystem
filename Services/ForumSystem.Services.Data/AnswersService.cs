@@ -23,10 +23,22 @@
             return toAdd;
         }
 
+        public Answer AnswersById(int id)
+        {
+            return this.answers.All()
+                .Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public IQueryable<Answer> AnswersByPostId(int id)
         {
             return this.answers.All()
                 .Where(x => x.ForumPostId == id);
+        }
+
+        public void Delete(Answer toDelete)
+        {
+            this.answers.Delete(toDelete);
+            this.answers.Save();
         }
     }
 }

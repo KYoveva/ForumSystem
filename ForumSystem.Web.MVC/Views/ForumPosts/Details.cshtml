@@ -12,31 +12,45 @@
             <div class="col-md-8 col-md-offset-2">
                 <br>
                 <div class="row">
-                    <div class="col-sm-8">
-                        <h1 class="text-muted">@post.Title</h1>
-                        <p>
-                            @post.Content
-                        </p>
-                        <p class="text-muted"><span class="glyphicon glyphicon-calendar"></span>&nbsp;@post.CreatedOn  <span class="badge">by: @post.Author </span></p>
+                    <div class="col-sm-10">
+                        <table>
+                            <tr>
+                                <td><img class="media-object" src="@post.Avatar" width="50"></td>
+                                <td>
+                                    <h1 class="text-muted">@post.Title</h1>
+                                    <p>
+                                        @post.Content
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <p class="text-muted"><span class="glyphicon glyphicon-calendar"></span>&nbsp;@post.CreatedOn  <span class="badge">by: @post.Author </span></p>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <br />
                 <div class="row">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <h4>Add new answer.</h4>
-                        <hr />
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                <textarea rows="4" cols="50" id="answer"></textarea>
+                    <div class="col-sm-8">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="form-group">
+                                <div class="col-md-10 text-center">
+                                    <label for="answer">Content*</label>
+                                    <textarea rows="4" cols="100" id="answer"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button id="create" class="btn btn-default" data-id="@post.Id">Answer</button>
+                            <hr />
+                            <div class="form-group">
+                                <div class="div class=" col-md-10 text-center"">
+                                    <button id="create" class="btn btn-info" data-id="@post.Id">Answer</button>
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
                 <div class="row" id="partialViewDiv">
                     @{Html.RenderAction("_ForumPostAnswersPartial");}
@@ -47,24 +61,26 @@
                         }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/toastr")
     <script>
-        $("button").click(function () {
+        $("#create").click(function () {
             var data =
                 {
                     Content: $("#answer").val(),
                     ForumPostId: $(this).attr("data-id")
                 };
-
             var url = '@Url.Action("Create", "Answer")';
+            createClick(url, data);
+        });
+
+        function createClick(url, data) {
             $.post(url, data, function (data) {
-                toastr.success('Answer added');
+                toastr.success('Answer added!');
                 var id = data.forumPostId;
                 $('#answer').val("");
                 $("#partialViewDiv").load('@(Url.Action("_ForumPostAnswersPartial", "ForumPosts",null, Request.Url.Scheme))?id=' + id);
             }).fail(function () {
                 toastr.error('The answer length must be between 1 and 1000 symbols!');
             });
-        });
+        }
     </script>
 }

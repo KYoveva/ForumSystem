@@ -27,7 +27,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { Area = "" }, null)</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Post Categories", "Index", "Categories", new { Area = "Administrative" }, null)</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
                 @Html.Partial("_Toastr")

@@ -95,7 +95,7 @@
             }
             else
             {
-                this.AddToastMessage("Error", "Invalid forum post!", ToastType.Error);
+                this.AddToastMessage("Error", "Title and Content must be at least 5 symbols!", ToastType.Error);
             }
             return Redirect("/");
         }

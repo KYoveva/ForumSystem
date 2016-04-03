@@ -18,13 +18,13 @@
 
         [Required(ErrorMessage = "Title is required")]
         [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 5 characters required")]
-        [StringLength(150, ErrorMessage = "Maximum {2} characters exceeded")]
+        [StringLength(150, ErrorMessage = "Maximum 150 characters exceeded")]
         public string Title { get; set; }
 
         [Required]
         [Display(Name = "Content")]
         [RegularExpression(@"^.{5,}$", ErrorMessage = "Minimum 5 characters required")]
-        [StringLength(1000, ErrorMessage = "Content must be between 1 and 1000 symbols!")]
+        [StringLength(1000, ErrorMessage = "Content must be between 5 and 1000 symbols!")]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 

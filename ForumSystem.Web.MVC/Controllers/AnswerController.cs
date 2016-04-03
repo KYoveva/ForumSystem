@@ -39,5 +39,18 @@
                 throw new HttpException(400, "Invalid answer");
             }
         }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var answer = this.answersService.AnswersById(id);
+            if (answer != null)
+            {
+                this.answersService.Delete(answer);
+            }
+
+            return this.Json(new { Id = answer.ForumPostId });
+        }
     }
 }

@@ -1,15 +1,16 @@
 ﻿namespace ForumSystem.Web.MVC.Areas.Administrative.Controllers
 {
-    using System.Web.Mvc;
     using System.Linq;
+    using System.Web.Mvc;
     using AutoMapper.QueryableExtensions;
+    using Common.Constants;
     using ForumSystem.Models;
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using Models;
     using Services.Data.Contracts;
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = Admin.AdminRole)]
     public class CategoriesController : Controller
     {
         private IForumPostCategoriesService categories;
@@ -21,7 +22,7 @@
 
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         public ActionResult ForumPostCategories_Read([DataSourceRequest]DataSourceRequest request)
@@ -30,7 +31,7 @@
                 .ProjectTo<ForumPostCategoriesViewModel>()
                 .ToDataSourceResult(request);
 
-            return Json(result);
+            return this.Json(result);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -46,10 +47,9 @@
 
                 this.categories.AddCategory(entity);
                 category.Id = entity.Id;
-
             }
 
-            return Json(new[] { category }.ToDataSourceResult(request, ModelState));
+            return this.Json(new[] { category }.ToDataSourceResult(request, this.ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -73,7 +73,7 @@
                 this.categories.SaveChanges();
             }
 
-            return Json(new[] { category }.ToDataSourceResult(request, ModelState));
+            return this.Json(new[] { category }.ToDataSourceResult(request, this.ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -91,13 +91,13 @@
                 this.categories.Delete(entity);
             }
 
-            return Json(new[] { category }.ToDataSourceResult(request, ModelState));
+            return this.Json(new[] { category }.ToDataSourceResult(request, this.ModelState));
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
+        // protected override void Dispose(bool disposing)
+        // {
         //    db.Dispose();
         //    base.Dispose(disposing);
-        //}
+        // }
     }
 }

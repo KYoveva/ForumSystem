@@ -7,6 +7,10 @@
     {
         IQueryable<Answer> AnswersByPostId(int id);
 
+        Answer AnswersById(int id);
+
         Answer AddAnswer(Answer toAdd);
+
+        void Delete(Answer toDelete);
     }
 }
